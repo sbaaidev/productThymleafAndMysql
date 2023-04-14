@@ -3,6 +3,8 @@ package com.formationjee.formationjeedemo.service;
 import com.formationjee.formationjeedemo.entities.Product;
 import com.formationjee.formationjeedemo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,5 +39,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductByID(Long id) {
         return repository.findById(id).get();
+    }
+
+    @Override
+    public Page<Product> findProductByProductName(String mc, Pageable pageable) {
+        return repository.findByProductNameContains(mc,pageable);
     }
 }

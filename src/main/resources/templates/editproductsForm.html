@@ -40,7 +40,12 @@
             <button class="btn btn-primary" type="submit">Ajouter</button>
         </form>-->
 
-        <form th:action="@{/addProduct}" method="post" >
+        <form th:action="@{/editProduct}" method="post" >
+            <div class="mb-3 mt-3">
+                <label for="id" class="form-label">ID:</label>
+                <label th:text="${product.id}"></label>
+                <input type="hidden" class="form-control" id="id" placeholder="ID" name="id" th:value="${product.id}">
+            </div>
             <div class="mb-3 mt-3">
             <labe class="form-label">Name</labe>
             <input class="form-control" type="text" id="productName" name="productName" th:value="${product.productName}"/>
