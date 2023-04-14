@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout.html">
 <head>
     <meta charset="UTF-8">
     <title>Page Index</title>
@@ -7,39 +9,10 @@
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Pricing</a>
-                <a class="nav-link disabled">Disabled</a>
-            </div>
-        </div>
-    </div>
-</nav>
+<div layout:fragment="content">
 <h1 class="bg-danger">This is page Products</h1>
 <div class="row">
     <div class="col col-md-6 p-3">
-    <!--    <form th:action="@{/addProduct}" method="post" th:object="${product}">
-
-            <labe class="form-label">Name</labe>
-            <input class="form-control" type="text" th:field="*{productName}"/>
-            <span class="text-danger" th:errors="${product.productName}" th:value="${product.productName}"></span>
-            <labe class="form-label">Price</labe>
-            <input class="form-control" type="text" th:field="*{price}"/>
-            <span class="text-danger" th:errors="${product.price}" th:value="${product.price}"></span>
-            <labe class="form-label">Quantity</labe>
-            <input class="form-control" type="text" th:field="*{quantity}"/>
-            <span class="text-danger" th:errors="${product.quantity}" th:value="${product.quantity}"></span>
-            <button class="btn btn-primary" type="submit">Ajouter</button>
-        </form>-->
-
         <form th:action="@{/addProduct}" method="post" >
             <div class="mb-3 mt-3">
             <labe class="form-label">Name</labe>
@@ -61,6 +34,7 @@
 
     </div>
 
+</div>
 </div>
 </body>
 </html>

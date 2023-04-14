@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout.html">
 <head>
     <meta charset="UTF-8">
     <title>Page Index</title>
@@ -7,6 +9,8 @@
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
 </head>
 <body>
+<div layout:fragment="content">
 <h1 class="alert alert-danger">This is page Index</h1>
+</div>
 </body>
 </html>
