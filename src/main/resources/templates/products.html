@@ -39,6 +39,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Qte</th>
+                        <th>Image</th>
                         <th colspan="2">Actions</th>
 
                     </tr>
@@ -47,6 +48,8 @@
                         <td th:text="${product.productName}"></td>
                         <td th:text="${product.price}"></td>
                         <td th:text="${product.quantity}"></td>
+                        <td><img th:if="${product.image}" th:src="@{'images/'+${product.image}}"></td>
+
                         <td><a onclick="return confirm('Etes vous sûre?')" class="btn btn-danger"
                                th:href="@{/deleteProduct(id=${product.id},keyword=${keyword}, page=${currentPage})}"> <i class="bi bi-trash"></i></a></td>
                         <td><a th:href="@{/editProductee(id=${product.id})} " class="btn btn-info">

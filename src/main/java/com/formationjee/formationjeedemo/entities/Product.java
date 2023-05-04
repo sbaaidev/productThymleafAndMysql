@@ -23,6 +23,7 @@ public class Product {
     private double price;
     @Min(1)
     private int quantity;
+    private String image;
 
     public Product(String productName, double price, int quantity) {
         this.productName = productName;

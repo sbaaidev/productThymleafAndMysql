@@ -2,16 +2,22 @@ package com.formationjee.formationjeedemo.controller;
 
 import com.formationjee.formationjeedemo.entities.Product;
 import com.formationjee.formationjeedemo.service.ProductService;
+import com.formationjee.formationjeedemo.tools.FilesStorageService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,6 +25,8 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService service;
+    @Autowired
+    FilesStorageService storageService;
 
     //GetPage Index qui contien la liste des produits
        @GetMapping("/index")
@@ -43,10 +51,22 @@ public class ProductController {
     }
 
      @PostMapping("/addProduct")
-    public String addProduct(@Valid Product product, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) return "productsForm";
+    public String addProduct(@Valid Product product, BindingResult bindingResult, @RequestParam("file") MultipartFile file){
+        if(bindingResult.hasErrors()){
+            return "productsForm";
+        }
+        product.setImage(file.getOriginalFilename());
         service.addProduct(product);
+        storageService.save(file);
         return "redirect:/index";
+    }
+
+    @GetMapping("/images/{filename:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
+        Resource file = storageService.load(filename);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
     @GetMapping("/deleteProduct")
