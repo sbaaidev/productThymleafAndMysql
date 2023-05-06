@@ -1,8 +1,12 @@
 package com.formationjee.formationjeedemo.controller;
 
+import com.formationjee.formationjeedemo.entities.Categorie;
 import com.formationjee.formationjeedemo.entities.Product;
+import com.formationjee.formationjeedemo.repository.CategoryRepository;
 import com.formationjee.formationjeedemo.service.ProductService;
 import com.formationjee.formationjeedemo.tools.FilesStorageService;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -25,6 +29,9 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService service;
+
+    @Autowired
+    CategoryRepository catrepo;
     @Autowired
     FilesStorageService storageService;
 
@@ -39,9 +46,11 @@ public class ProductController {
         model.addAttribute("listProducts",pageProducts.getContent());
         model.addAttribute("pages",new int[pageProducts.getTotalPages()]);
         model.addAttribute("currentPage",page);
+           model.addAttribute("cats",catrepo.findAll());
         model.addAttribute("keyword",kw);
         return "products";
     }
+
 
     @GetMapping("/addProducts")
     public String getaddProductPage(Model model){
@@ -68,6 +77,7 @@ public class ProductController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
+
 
     @GetMapping("/deleteProduct")
     public String deleteProduct(@RequestParam(name = "id") Long id,String keyword, int page){
@@ -96,5 +106,19 @@ public class ProductController {
     }
 
 
+    /*@PostConstruct
+    public void addProductToCat(){
+           Categorie cat1=catrepo.save(new Categorie(null,"hh",null));
+        Categorie cat2=catrepo.save(new Categorie(null,"hh",null));
+
+        for(Product p:service.getAllProducts()){
+            if(p.getId()<10)
+            p.setCat(cat2);
+            else
+            p.setCat(cat1);
+           service.updateProduct(p);
+        }
+
+    }*/
 
 }

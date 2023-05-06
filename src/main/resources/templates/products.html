@@ -7,6 +7,7 @@
     <title>Page Index</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -75,6 +76,73 @@
         </div>
     </div>
 </div>
+
+    <div>
+
+           <select  id="mySelect"    >
+               <option  th:each="cat:${cats}" th:with="idCat=${cat.id}" th:value="${cat.id}" th:text="${cat.nom}">
+
+               </option>
+           </select>
+
+
+      <select  id="select2" name="idCategory">
+            <option value="0">------select------</option>
+        </select>
+
+    </div>
+    <script>
+        jQuery(document).ready(function($) {
+
+            const select2=document.getElementById("select2");
+            $("#mySelect").on('change', function() {
+                $('#select2 option').remove();
+                var idcat = $(this).val();
+                if(idcat){
+                    $.ajax ({
+                        type: 'GET',
+                        url: 'http://localhost:8989/api/products/getProductByCat',
+                        data: { idCat: '' + idcat + '' },
+                        success : function(htmlresponse) {
+                            $('#opt_lesson_list').html(htmlresponse);
+                            for(let i=0;i<htmlresponse.length;i++){
+                                var opt = document.createElement('option');
+                                opt.value = htmlresponse[i].id;
+                                opt.innerHTML = htmlresponse[i].productName;
+                                select2.appendChild(opt);
+                                console.log(htmlresponse[i].productName)
+                            }
+                           // console.log(htmlresponse);
+                        }
+                    });
+                }
+            });
+        });
+        function myFunction() {
+            const select1=document.getElementById("select1");
+
+            var x = document.getElementById("mySelect").value;
+            const a=document.createElement('a');
+            a.type='a';
+            a.style.display='none';
+            //a.setAttribute("href","getProductByCat/"+x)
+            select1.appendChild(a);
+            a.click();
+            $("a").click(function(){
+                $.get("http://localhost:8989/getProductByCat/"+x, function(data, status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+            });
+
+            alert(x);
+            //document.getElementById("demo").innerHTML = "You selected: " + x;
+        }
+
+
+
+
+    </script>
+
 </div>
 
 </body>

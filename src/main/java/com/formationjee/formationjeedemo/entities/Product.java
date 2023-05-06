@@ -1,5 +1,6 @@
 package com.formationjee.formationjeedemo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -24,6 +25,9 @@ public class Product {
     @Min(1)
     private int quantity;
     private String image;
+    @ManyToOne()
+    @JsonIgnore
+    private Categorie cat;
 
     public Product(String productName, double price, int quantity) {
         this.productName = productName;
