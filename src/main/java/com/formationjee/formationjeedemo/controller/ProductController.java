@@ -46,9 +46,21 @@ public class ProductController {
         model.addAttribute("listProducts",pageProducts.getContent());
         model.addAttribute("pages",new int[pageProducts.getTotalPages()]);
         model.addAttribute("currentPage",page);
-           model.addAttribute("cats",catrepo.findAll());
+           model.addAttribute("cat",new Categorie());
+           model.addAttribute("products",new Categorie());
         model.addAttribute("keyword",kw);
         return "products";
+    }
+
+    @GetMapping("modal1")
+    public String modal1() {
+        return "modal1";
+    }
+
+    @GetMapping("modal2")
+    public String modal2(@RequestParam("name") String name, Model model) {
+        model.addAttribute("name", name);
+        return "modal2";
     }
 
 

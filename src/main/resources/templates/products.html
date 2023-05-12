@@ -7,7 +7,7 @@
     <title>Page Index</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.3/font/bootstrap-icons.css">
-    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -90,7 +90,108 @@
             <option value="0">------select------</option>
         </select>
 
+        <div class="row mt-5">
+            <div class="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Launch simple modal
+                </button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1">
+                    Dynamic modal 1
+                </button>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+                    Dynamic modal 2
+                </button>
+
+
+                <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+                                egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+                      aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+                                egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div  class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+                      aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel2">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
+                                egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+    <script>
+        $('#exampleModal1').on('show.bs.modal', function () {
+
+            $.get("/modals/modal1", function (data) {
+                $('#exampleModal1').find('.modal-body').html(data);
+            })
+        });
+
+        $('#exampleModal2').on('show.bs.modal', function () {
+            var name = prompt("Please enter your name", "John Doe");
+            $.get("/modals/modal2?name=" + name, function (data) {
+                $('#exampleModal2').find('.modal-body').html(data);
+            })
+        })
+    </script>
     <script>
         jQuery(document).ready(function($) {
 
